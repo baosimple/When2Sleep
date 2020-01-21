@@ -1,0 +1,13 @@
+@import url("normalize.css");
+@import url("skeleton.css");
+
+.container {
+    padding-top: 100px;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+}
+
+h1 {
+    color: #ccc;
+    font-weight: 300;
+}

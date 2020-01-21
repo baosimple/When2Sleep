@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>When2Sleep</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <script>
+    function calculate() {
+
+      var wakeSleep = document.getElementById('wakeSleep').value;
+      var hour = document.getElementById('hour').value;
+      var minute = document.getElementById('minute').value;
+      var amPM = document.getElementById('amPM').value;
+      var totalMinutes = hour*60+parseInt(minute);
+
+      if(wakeSleep == "sleep"){
+
+        var totalMinutes9 = totalMinutes + 540 + 15;
+        var totalMinutes75 = totalMinutes + 450 + 15;
+        var totalMinutes6 = totalMinutes + 360 + 15;
+        var totalMinutes45 = totalMinutes + 270 + 15;
+
+        var timeString9 = convertToTime(totalMinutes9, amPM);
+        var timeString75 = convertToTime(totalMinutes75, amPM);
+        var timeString6 = convertToTime(totalMinutes6, amPM);
+        var timeString45 = convertToTime(totalMinutes45, amPM);
+
+        document.getElementById("results").innerHTML = "Wake up at " + timeString9 + ", " + timeString75 + ", " + timeString6 + ", or " + timeString45;
+      }
+
+      if(wakeSleep == "wake") {
+        var totalMinutes9 = totalMinutes - 540 - 15;
+        var totalMinutes75 = totalMinutes - 450 - 15;
+        var totalMinutes6 = totalMinutes - 360 - 15;
+        var totalMinutes45 = totalMinutes - 270 - 15;
+
+        var timeString9 = convertToTime(totalMinutes9, amPM);
+        var timeString75 = convertToTime(totalMinutes75, amPM);
+        var timeString6 = convertToTime(totalMinutes6, amPM);
+        var timeString45 = convertToTime(totalMinutes45, amPM);
+
+        document.getElementById("results").innerHTML = "Go to sleep at " + timeString9 + ", " + timeString75 + ", " + timeString6 + ", or " + timeString45;
+      }
+    }
+
+    function convertToTime(totalMinutes, amPM) {
+      var timeString = "";
+
+      if(totalMinutes < 0) {
+        totalMinutes = 720 + totalMinutes;
+        if(amPM == "AM")
+          amPM = "PM";
+        else
+          amPM = "AM";
+      }
+
+      if(totalMinutes >= 720) {
+        totalMinutes %= 720;
+        if(amPM == "AM")
+          amPM = "PM";
+        else
+          amPM = "AM";
+      }
+
+      hours = Math.trunc(totalMinutes/60);
+      if(hours == 0) 
+        hours = 12;
+      totalMinutes %= 60;
+      timeString += hours;
+      timeString += ":"
+      if(totalMinutes < 10)
+        timeString += "0";
+      timeString += totalMinutes;
+      timeString += " " + amPM;
+      return timeString
+    }
+  </script>
+
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+
+    <form id="timeSelector">
+
+      <h1>I want to...</h1>
+
+      <select id="wakeSleep">
+        <option value="wake">Wake up at</option value=>
+        <option value="sleep">Sleep at</option value=>
+      </select>
+
+      <select id="hour">
+        <option value=1>1</option>
+        <option value=2>2</option value=2>
+        <option value=3>3</option value=>
+        <option value=4>4</option value=>
+        <option value=5>5</option value=>
+        <option value=6>6</option>
+        <option value=7>7</option value=>
+        <option value=8>8</option value=>
+        <option value=9>9</option>
+        <option value=10>10</option value=>
+        <option value=11>11</option value=>
+        <option value=12>12</option value=>
+      </select>
+
+      <select id="minute">
+        <option value=0>00</option>
+        <option value=5>05</option>
+        <option value=10>10</option>
+        <option value=15>15</option>
+        <option value=20>20</option>
+        <option value=25>25</option>
+        <option value=30>30</option>
+        <option value=35>35</option>
+        <option value=40>40</option>
+        <option value=45>45</option>
+        <option value=50>50</option>
+        <option value=55>55</option>
+      </select>
+      <select id="amPM">
+        <option value="AM">AM</option>
+        <option value="PM">PM</option>
+      </select>
+
+      <input class="button" name="submit" type="submit" value="submit" onclick="calculate();return false;" />
+    </form>
+
+    <h1 id="results"></h1>
+    <p>Did you know: </p>
+    <p>A sleep cycle is 90 minutes. </p>
+    <p>Most people need an additional 15 minutes to fall asleep. </p>
+    <p>Waking up at the end of a sleep cycle to lead to feeling less groggy and more rested. </p>
+    <p>If you have time, sleeping for 9 hours (6 cycles) is highly recommend. </p>
+    <p>If you have less time, sleeping for 7.5 hours (5 cycles) is recommend. </p>
+    <p>If you are on a time crunch, sleep for 6 hours (4 cycles).</p>
+    <p>If you really have no time, sleep for 4.5 hours (3 cycles).</p>
+
+  </div>
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>
+
